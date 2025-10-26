@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+
+/* --- Variabel Warna & Desain untuk Kustomisasi Super Mudah --- */
+:root {
+    /* Palet Warna Utama (Gunakan Gradien) */
+    --primary-gradient: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%);
+    --primary-color-start: #00C9FF;
+    --primary-color-end: #92FE9D;
+    
+    /* Warna Latar Belakang & Teks */
+    --background-gradient: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+    --text-color: #e0e0e0;
+    --dark-color: #051014;
+
+    /* Variabel untuk Efek Cahaya Interaktif (Dikelola oleh JS) */
+    --glow-x: 50%;
+    --glow-y: 50%;
+
+    /* Font Utama */
+    --font-family: 'Orbitron', sans-serif;
+}
+
+/* --- Reset & Pengaturan Dasar Body --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    background: var(--background-gradient);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    color: var(--text-color);
+}
+
+/* ... (Efek Grid Bergerak tetap sama) ... */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image:
+        linear-gradient(rgba(0, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveGrid 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveGrid {
+    from { background-position: 0 0; }
+    to { background-position: 40px 40px; }
+}
+
+
+/* --- Kontainer Utama Navbar (Dengan Efek Cahaya Interaktif) --- */
+nav {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 30px;
+    padding: 20px 40px; /* Spasi lebih lega */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    background: rgba(10, 20, 30, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 190, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    z-index: 100;
+    overflow: hidden; /* Penting untuk efek cahaya */
+    transition: background 0.4s ease;
+}
+
+/* EFEK CAHAYA AURORA (mengikuti kursor) */
+nav::before {
+    content: '';
+    position: absolute;
+    top: var(--glow-y);
+    left: var(--glow-x);
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(0, 201, 255, 0.2), transparent 60%);
+    transform: translate(-50%, -50%);
+    transition: top 0.2s linear, left 0.2s linear;
+    pointer-events: none; /* Agar tidak menghalangi klik */
+    z-index: -1;
+}
+
+/* --- Logo dengan Teks Gradien --- */
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(0, 201, 255, 0.4);
+}
+
+/* --- Link Navigasi (Dengan Efek Halus) --- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 40px; /* Spasi lebih nyaman */
+    align-items: center;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500; /* Sedikit lebih tebal */
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links li a:not(.btn)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background: var(--primary-gradient);
+    box-shadow: 0 0 8px var(--primary-color-end);
+    transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-links li a:hover:not(.btn) {
+    color: white;
+    transform: translateY(-2px); /* Efek mengangkat */
+}
+
+.nav-links li a:hover:not(.btn)::after {
+    width: 100%;
+}
+
+/* --- Tombol dengan Gradien Animasi --- */
+.btn {
+    padding: 12px 35px;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    background: var(--primary-gradient);
+    background-size: 200% auto;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 5px 15px rgba(0, 201, 255, 0.3);
+}
+
+.btn:hover {
+    background-position: right center; /* Menggerakkan gradien */
+    box-shadow: 0 8px 20px rgba(146, 254, 157, 0.4);
+    transform: scale(1.05); /* Sedikit membesar */
+}
+
+/* --- Tombol Hamburger Menu (Tetap sama, sudah bagus) --- */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    gap: 5px;
+    flex-direction: column;
+    z-index: 101;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-color);
+    border-radius: 2px;
+    box-shadow: 0 0 5px var(--primary-color-start);
+    transition: all 0.3s ease-in-out;
+}
+
+/* --- Desain Responsif (Dengan Animasi Item Menu) --- */
+@media (max-width: 920px) { /* Diedit sedikit agar lebih pas */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Sembunyikan di luar */
+        width: 280px;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        gap: 20px;
+        
+        background: rgba(10, 20, 30, 0.4);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-left: 1px solid rgba(0, 190, 255, 0.2);
+        box-shadow: -10px 0 25px rgba(0, 0, 0, 0.2);
+
+        transition: right 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .nav-links.active {
+        right: 0; /* Munculkan dari kanan */
+    }
+    
+    .nav-links li {
+        opacity: 0; /* Sembunyikan item awalnya */
+        transform: translateX(20px);
+    }
+
+    /* Animasi saat menu aktif */
+    .nav-links.active li {
+        animation: fadeInItems 0.5s forwards;
+    }
+
+    /* Staggered animation delay */
+    .nav-links.active li:nth-child(1) { animation-delay: 0.2s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.3s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.4s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.5s; }
+    .nav-links.active li:nth-child(5) { animation-delay: 0.6s; }
+    .nav-links.active li:nth-child(6) { animation-delay: 0.7s; }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* ... (Animasi hamburger 'X' tetap sama) ... */
+    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+}
+
+/* Keyframes untuk animasi item menu mobile */
+@keyframes fadeInItems {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
