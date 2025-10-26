@@ -187,43 +187,81 @@ nav::before {
 }
 
 /* --- Desain Responsif (Dengan Animasi Item Menu) --- */
-@media (max-width: 920px) { /* Diedit sedikit agar lebih pas */
+@media (max-width: 920px) {
+    
+    /* --- Kontainer Menu Samping (Sidebar) --- */
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%; /* Sembunyikan di luar */
-        width: 280px;
+        right: 0;
+        width: 280px; 
         height: 100vh;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0;
-        gap: 20px;
         
-        background: rgba(10, 20, 30, 0.4);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
+        /* Latar belakang baru dengan gradien halus */
+        background: linear-gradient(180deg, rgba(15, 32, 39, 0.8) 0%, rgba(32, 58, 67, 0.9) 100%);
+        backdrop-filter: blur(20px); /* Blur lebih intens untuk efek 'frosty' */
+        -webkit-backdrop-filter: blur(20px);
+        
         border-left: 1px solid rgba(0, 190, 255, 0.2);
-        box-shadow: -10px 0 25px rgba(0, 0, 0, 0.2);
+        box-shadow: -10px 0 35px rgba(0, 0, 0, 0.3);
 
-        transition: right 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Jarak antar item menu */
+
+        transform: translateX(100%); /* Sembunyikan di luar layar kanan */
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .nav-links.active {
-        right: 0; /* Munculkan dari kanan */
-    }
-    
-    .nav-links li {
-        opacity: 0; /* Sembunyikan item awalnya */
-        transform: translateX(20px);
+        transform: translateX(0); /* Munculkan ke layar */
     }
 
-    /* Animasi saat menu aktif */
+    /* --- Item & Link di Dalam Menu --- */
+    .nav-links li {
+        width: 80%; /* Membuat area klik lebih lebar */
+        text-align: center;
+        opacity: 0; /* Sembunyikan item awalnya untuk animasi */
+    }
+    
+    .nav-links li a {
+        display: block;
+        padding: 15px 0; /* Area sentuh lebih besar */
+        font-size: 1.1rem; /* Teks sedikit lebih besar */
+        transition: color 0.3s, background 0.3s;
+        border-radius: 8px;
+    }
+
+    /* Efek sentuh pada link */
+    .nav-links li a:not(.btn):active {
+        background: rgba(0, 201, 255, 0.1);
+        color: white;
+    }
+    
+    /* Hapus garis bawah default di mobile */
+    .nav-links li a:not(.btn)::after {
+        display: none;
+    }
+
+    /* Pemisah (Divider) Bercahaya antar item */
+    .nav-links li:not(:last-child) {
+        border-bottom: 1px solid rgba(0, 190, 255, 0.1);
+    }
+    
+    /* --- Tombol di Tampilan Mobile --- */
+    .nav-links .btn {
+        width: 100%; /* Tombol memenuhi lebar kontainer li */
+        margin-top: 20px;
+    }
+
+    /* --- Animasi Item Menu Saat Muncul --- */
     .nav-links.active li {
         animation: fadeInItems 0.5s forwards;
     }
 
-    /* Staggered animation delay */
+    /* Staggered animation delay (muncul satu per satu) */
     .nav-links.active li:nth-child(1) { animation-delay: 0.2s; }
     .nav-links.active li:nth-child(2) { animation-delay: 0.3s; }
     .nav-links.active li:nth-child(3) { animation-delay: 0.4s; }
@@ -231,14 +269,26 @@ nav::before {
     .nav-links.active li:nth-child(5) { animation-delay: 0.6s; }
     .nav-links.active li:nth-child(6) { animation-delay: 0.7s; }
 
+    /* Tombol Hamburger */
     .menu-toggle {
         display: flex;
     }
 
-    /* ... (Animasi hamburger 'X' tetap sama) ... */
     .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
     .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+}
+
+/* Keyframes baru untuk animasi item menu mobile (meluncur dari bawah) */
+@keyframes fadeInItems {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Mulai dari posisi 20px ke bawah */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Kembali ke posisi normal */
+    }
 }
 
 /* Keyframes untuk animasi item menu mobile */
